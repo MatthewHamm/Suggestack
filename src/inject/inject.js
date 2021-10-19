@@ -117,7 +117,7 @@ window.onload = async function(){
 					const qwindex=response.findIndex(function(item){return item.desc.length>200})
 					const qsugg=response.slice(qwindex,response.length);
 					const ssugg=response.slice(0,qwindex-1);
-					var sugg=response.slice(0,5).concat(response.slice(response.length>15? 10:4,response.length>15? 15:response.length));
+					
 					
 					var css = ".card:hover {box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);} \n .card {box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s;  display:inline-grid; gridColumn:auto;padding: 2px 16px; text-decoration: none;}\n .links {text-decoration: none;    color:var(--print_on_web_bg_color);";
 					var style = document.createElement('style');
