@@ -13,7 +13,7 @@
           console.log("it's alive");
           
           
-          fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" OR ")))
+          fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent("site:substack.com/p/ "+request.q[0]))
           .then(response=>response.text())
           .then(function(data){
             

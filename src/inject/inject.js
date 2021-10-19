@@ -114,6 +114,9 @@ window.onload = async function(){
 					title.appendChild(img);
 					title.innerHTML+="<h2>Suggestack</h2>";
 					suggestion.appendChild(title);
+					const qwindex=response.findIndex(function(item){return item.desc.length>200})
+					const qsugg=response.slice(qwindex,response.length);
+					const ssugg=response.slice(0,qwindex-1);
 					var sugg=response.slice(0,5).concat(response.slice(response.length>15? 10:4,response.length>15? 15:response.length));
 					
 					var css = ".card:hover {box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);} \n .card {box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s;  display:inline-grid; gridColumn:auto;padding: 2px 16px; text-decoration: none;}\n .links {text-decoration: none;    color:var(--print_on_web_bg_color);";
@@ -126,8 +129,8 @@ window.onload = async function(){
 					}
 		
 					document.getElementsByTagName('head')[0].appendChild(style);
-					if(sugg.length==10){
-						for(let i=0;i<sugg.length/2 ;i++){
+					if(qsugg.length>=5 && ssugg.length>=5){
+						for(let i=0;i<5;i++){
 							var div;
 							div=document.createElement("div");
 							div.className="card";
@@ -137,8 +140,8 @@ window.onload = async function(){
 							var a=document.createElement("a");
 							a.className="links"
 							
-							a.href=sugg[i].link;
-							a.innerHTML="<h3>"+sugg[i].title+"</h3> <p>"+sugg[i].desc+"</p>";
+							a.href=ssugg[i].link;
+							a.innerHTML="<h3>"+ssugg[i].title+"</h3> <p>"+ssugg[i].desc+"</p>";
 							
 							
 							
@@ -155,8 +158,8 @@ window.onload = async function(){
 							var a=document.createElement("a");
 							a.className="links"
 							
-							a.href=sugg[i+(sugg.length/2)].link;
-							a.innerHTML="<h3>"+sugg[i+(sugg.length/2)].title+"</h3> <p>"+sugg[i+(sugg.length/2)].desc+"</p>";
+							a.href=qsugg[i].link;
+							a.innerHTML="<h3>"+qsugg[i].title+"</h3> <p>"+qsugg[i].desc+"</p>";
 							
 							
 							
@@ -164,35 +167,141 @@ window.onload = async function(){
 							
 							div.appendChild(a);
 							suggestion.appendChild(div);
-							
+
 						}
 					}else{
-						for(i in sugg){
-							var div;
-							div=document.createElement("div");
-							div.className="card";
-							
-							if(i%2==0){
-								div.style.gridColumn=1;
-							}else{
-								div.style.gridColumn=2;
+						if(qsugg.length>ssugg.length){
+							for(let i=0;i<ssugg.length;i++){
+								var div;
+								div=document.createElement("div");
+								div.className="card";
+								
+								
+								div.style.gridColumn=1
+								var a=document.createElement("a");
+								a.className="links"
+								
+								a.href=ssugg[i].link;
+								a.innerHTML="<h3>"+ssugg[i].title+"</h3> <p>"+ssugg[i].desc+"</p>";
+								
+								
+								
+								
+								
+								div.appendChild(a);
+								suggestion.appendChild(div);
+								var div;
+								div=document.createElement("div");
+								div.className="card";
+								
+								
+								div.style.gridColumn=2
+								var a=document.createElement("a");
+								a.className="links"
+								
+								a.href=qsugg[i].link;
+								a.innerHTML="<h3>"+qsugg[i].title+"</h3> <p>"+qsugg[i].desc+"</p>";
+								
+								
+								
+								
+								
+								div.appendChild(a);
+								suggestion.appendChild(div);
+	
 							}
-							
-							var a=document.createElement("a");
-							a.className="links"
-							
-							a.href=sugg[i].link;
-							a.innerHTML="<h3>"+sugg[i].title+"</h3> <p>"+sugg[i].desc+"</p>";
-							
-							
-							
-							
-							
-							div.appendChild(a);
-							suggestion.appendChild(div);	
+							for(let i=ssugg.length;i<qsugg.length&&i+ssugg.length<10;i++){
+								var div;
+								div=document.createElement("div");
+								div.className="card";
+								
+								
+								if(i%2==0){
+									div.style.gridColumn=1
+								}else{
+									div.style.gridColumn=2
+								}
+								var a=document.createElement("a");
+								a.className="links"
+								
+								a.href=qsugg[i].link;
+								a.innerHTML="<h3>"+qsugg[i].title+"</h3> <p>"+qsugg[i].desc+"</p>";
+								
+								
+								
+								
+								
+								div.appendChild(a);
+								suggestion.appendChild(div);
+							}
+						}else{
+							for(let i=0;i<qsugg.length;i++){
+								var div;
+								div=document.createElement("div");
+								div.className="card";
+								
+								
+								div.style.gridColumn=1
+								var a=document.createElement("a");
+								a.className="links"
+								
+								a.href=ssugg[i].link;
+								a.innerHTML="<h3>"+ssugg[i].title+"</h3> <p>"+ssugg[i].desc+"</p>";
+								
+								
+								
+								
+								
+								div.appendChild(a);
+								suggestion.appendChild(div);
+								var div;
+								div=document.createElement("div");
+								div.className="card";
+								
+								
+								div.style.gridColumn=2
+								var a=document.createElement("a");
+								a.className="links"
+								
+								a.href=qsugg[i].link;
+								a.innerHTML="<h3>"+qsugg[i].title+"</h3> <p>"+qsugg[i].desc+"</p>";
+								
+								
+								
+								
+								
+								div.appendChild(a);
+								suggestion.appendChild(div);
+	
+							}
+							for(let i=qsugg.length;i<ssugg.length && i+qsugg.length<10;i++){
+								var div;
+								div=document.createElement("div");
+								div.className="card";
+								
+								
+								if(i%2==0){
+									div.style.gridColumn=1
+								}else{
+									div.style.gridColumn=2
+								}
+								var a=document.createElement("a");
+								a.className="links"
+								
+								a.href=ssugg[i].link;
+								a.innerHTML="<h3>"+ssugg[i].title+"</h3> <p>"+ssugg[i].desc+"</p>";
+								
+								
+								
+								
+								
+								div.appendChild(a);
+								suggestion.appendChild(div);
+							}
 						}
-
+						
 					}
+					
 
 					document.getElementById("entry").appendChild(suggestion);
 					
