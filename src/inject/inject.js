@@ -10,6 +10,7 @@ window.onload = async function(){
 	var regex = new RegExp('[' + punctuation + ']', 'g');
 	const doc=document.getElementsByClassName("post typography")[0];
 	var test;
+	var test2;
 	var pro;
 	var proarray;
 	var proid;
@@ -18,19 +19,7 @@ window.onload = async function(){
 	var article;
 	try{
 		///gets a string of the substack article
-		pro=document.getElementsByClassName("user-head ")[0].getElementsByTagName("a")[0].getAttribute("href")//.links;
-		console.log(pro);
-		proarray;
-		if(pro==null){
-			proarray=["","","","",""]
-		}else{
-			proarray=pro.split('/');
-		}
 		
-		proid=proarray[4]
-		url=document.baseURI;
-		domain=url.slice(0,url.search("/p/"));
-		console.log(domain);
 		article=doc.innerText;
 		
 		console.log(article);
@@ -41,11 +30,33 @@ window.onload = async function(){
 		console.log(err)
 		
 		return;
-	}	 
-	if(test){
-		pro=document.getElementsByClassName("user-head ")[0].getElementsByTagName("a")[0].getAttribute("href")//.links;
+	}
+	try{
+		pro=doc.getElementsByClassName("user-head ")[0].getElementsByTagName("a")[0].getAttribute("href")//.links;
+		console.log(pro);
 		
-		proarray;
+		if(pro==null){
+			proarray=["","","","",""]
+		}else{
+			proarray=pro.split('/');
+		}
+		
+		proid=proarray[4]
+		url=document.baseURI;
+		domain=url.slice(0,url.search("/p/"));
+		console.log(domain);
+		test2=true;
+	}
+	catch(err){
+		test2=false
+		console.log(err)
+		
+		
+	}	 
+	if(test&&test2){
+		pro=doc.getElementsByClassName("user-head ")[0].getElementsByTagName("a")[0].getAttribute("href")//.links;
+		
+		
 		if(pro==null){
 			proarray=["","","","",""]
 		}else{
@@ -57,7 +68,15 @@ window.onload = async function(){
 		domain=url.slice(0,url.search("/p/"));
 		
 		article=doc.innerText;
-	}else{
+	}else if(test){
+		proarray=["","","","",""]
+		proid=proarray[4]
+		url=document.baseURI;
+		domain=url.slice(0,url.search("/p/"));
+		
+		article=doc.innerText;
+	}
+	else{
 		return
 	}
 
