@@ -10,10 +10,29 @@ window.onload = async function(){
 	var regex = new RegExp('[' + punctuation + ']', 'g');
 	const doc=document.getElementsByClassName("post typography")[0];
 	var test;
+	var pro;
+	var proarray;
+	var proid;
+	var url;
+	var domain;
 	var article;
 	try{
 		///gets a string of the substack article
+		pro=document.getElementsByClassName("user-head ")[0].getElementsByTagName("a")[0].getAttribute("href")//.links;
+		console.log(pro);
+		proarray;
+		if(pro==null){
+			proarray=["","","","",""]
+		}else{
+			proarray=pro.split('/');
+		}
+		
+		proid=proarray[4]
+		url=document.baseURI;
+		domain=url.slice(0,url.search("/p/"));
+		console.log(domain);
 		article=doc.innerText;
+		
 		console.log(article);
 		test=true
 	}
@@ -24,6 +43,19 @@ window.onload = async function(){
 		return;
 	}	 
 	if(test){
+		pro=document.getElementsByClassName("user-head ")[0].getElementsByTagName("a")[0].getAttribute("href")//.links;
+		
+		proarray;
+		if(pro==null){
+			proarray=["","","","",""]
+		}else{
+			proarray=pro.split('/');
+		}
+		
+		proid=proarray[4]
+		url=document.baseURI;
+		domain=url.slice(0,url.search("/p/"));
+		
 		article=doc.innerText;
 	}else{
 		return
@@ -91,12 +123,12 @@ window.onload = async function(){
 			})
 			textTable=textTable.sort((a,b)=>b.Common-a.Common)
 			console.log(textTable);
-			textTable.slice(0,10).forEach(textget);
+			textTable.slice(0,5).forEach(textget);
 			
 			chrome.runtime.sendMessage(
-				{contentScriptQuery: "query", q: textlist},function(response){
+				{contentScriptQuery: "query", q: textlist,id:proid, subdomain:domain},function(response){
 					
-					response=response.slice(0,-1);
+					
 					var suggestion=document.createElement("div");
 					suggestion.style.marginBottom="500px";
 					suggestion.style.marginLeft="5%";
@@ -114,11 +146,11 @@ window.onload = async function(){
 					title.appendChild(img);
 					title.innerHTML+="<h2>Suggestack</h2>";
 					suggestion.appendChild(title);
-					const qwindex=response.findIndex(function(item){return item.desc.length>200})
+					const qwindex=response.findIndex(function(item){return item.desc.length>256})
 					const qsugg=response.slice(qwindex,response.length);
 					const ssugg=response.slice(0,qwindex-1);
 					
-					
+
 					var css = ".card:hover {box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);} \n .card {box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s;  display:inline-grid; gridColumn:auto;padding: 2px 16px; text-decoration: none;}\n .links {text-decoration: none;    color:var(--print_on_web_bg_color);";
 					var style = document.createElement('style');
 		
@@ -280,7 +312,7 @@ window.onload = async function(){
 								div.className="card";
 								
 								
-								if(i%2==0){
+								if(i%2==1){
 									div.style.gridColumn=1
 								}else{
 									div.style.gridColumn=2
