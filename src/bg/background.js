@@ -25,7 +25,7 @@
                 
               })
               if(relstacks.length>0){
-                fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent(request.q.join(" OR ")+" site:"+relstacks.join(" OR site:")))
+                fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent(request.q.join(" OR ")+" site:"+relstacks.slice(0,64).join(" OR site:")))
                 .then(response=>response.text())
                 .then(function(data){
                   

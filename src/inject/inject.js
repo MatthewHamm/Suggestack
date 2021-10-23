@@ -189,8 +189,8 @@ window.onload = async function(){
 							
 							div.style.gridColumn=1
 							var a=document.createElement("a");
-							a.className="links"
-							
+							a.className="links";
+							a.target="_blank";
 							a.href=ssugg[i].link;
 							a.innerHTML="<h3>"+ssugg[i].title+"</h3> <p>"+ssugg[i].desc+"</p>";
 							
@@ -207,8 +207,8 @@ window.onload = async function(){
 							
 							div.style.gridColumn=2
 							var a=document.createElement("a");
-							a.className="links"
-							
+							a.className="links";
+							a.target="_blank";
 							a.href=qsugg[i].link;
 							a.innerHTML="<h3>"+qsugg[i].title+"</h3> <p>"+qsugg[i].desc+"</p>";
 							
@@ -230,8 +230,8 @@ window.onload = async function(){
 								
 								div.style.gridColumn=1
 								var a=document.createElement("a");
-								a.className="links"
-								
+								a.className="links";
+								a.target="_blank";
 								a.href=ssugg[i].link;
 								a.innerHTML="<h3>"+ssugg[i].title+"</h3> <p>"+ssugg[i].desc+"</p>";
 								
@@ -248,8 +248,8 @@ window.onload = async function(){
 								
 								div.style.gridColumn=2
 								var a=document.createElement("a");
-								a.className="links"
-								
+								a.className="links";
+								a.target="_blank";
 								a.href=qsugg[i].link;
 								a.innerHTML="<h3>"+qsugg[i].title+"</h3> <p>"+qsugg[i].desc+"</p>";
 								
@@ -273,8 +273,8 @@ window.onload = async function(){
 									div.style.gridColumn=2
 								}
 								var a=document.createElement("a");
-								a.className="links"
-								
+								a.className="links";
+								a.target="_blank";
 								a.href=qsugg[i].link;
 								a.innerHTML="<h3>"+qsugg[i].title+"</h3> <p>"+qsugg[i].desc+"</p>";
 								
@@ -294,8 +294,8 @@ window.onload = async function(){
 								
 								div.style.gridColumn=1
 								var a=document.createElement("a");
-								a.className="links"
-								
+								a.className="links";
+								a.target="_blank";
 								a.href=ssugg[i].link;
 								a.innerHTML="<h3>"+ssugg[i].title+"</h3> <p>"+ssugg[i].desc+"</p>";
 								
@@ -312,8 +312,8 @@ window.onload = async function(){
 								
 								div.style.gridColumn=2
 								var a=document.createElement("a");
-								a.className="links"
-								
+								a.className="links";
+								a.target="_blank";
 								a.href=qsugg[i].link;
 								a.innerHTML="<h3>"+qsugg[i].title+"</h3> <p>"+qsugg[i].desc+"</p>";
 								
@@ -337,8 +337,8 @@ window.onload = async function(){
 									div.style.gridColumn=2
 								}
 								var a=document.createElement("a");
-								a.className="links"
-								
+								a.className="links";
+								a.target="_blank";
 								a.href=ssugg[i].link;
 								a.innerHTML="<h3>"+ssugg[i].title+"</h3> <p>"+ssugg[i].desc+"</p>";
 								
