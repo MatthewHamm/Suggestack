@@ -142,6 +142,9 @@ window.onload = async function(){
 			})
 			textTable=textTable.sort((a,b)=>b.Common-a.Common)
 			console.log(textTable);
+			textTable.filter(function(item){
+				let months=["january","febuary","march","april","may","june","july","august","september","october","november","december"]
+				return !(months.includes(item))})
 			textTable.slice(0,5).forEach(textget);
 			
 			chrome.runtime.sendMessage(
