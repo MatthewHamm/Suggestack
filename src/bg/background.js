@@ -46,6 +46,7 @@
                   resultlist.forEach(getText);
                   resultlist.forEach(getlinks);
                   descrlist.splice(1).forEach(getDesc);
+                  console.log(desc);
                   if(results.length<5){
                     fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" OR ")))
                     .then(response=>response.text())
@@ -68,6 +69,7 @@
                       resultlist.forEach(getText);
                       resultlist.forEach(getlinks);
                       descrlist.splice(1).forEach(getDesc);
+                      console.log(desc);
                       fetch("https://api.qwant.com/v3/search/web?q="+encodeURIComponent("site:substack.com/p/ "+request.q[0])+"&count=10&locale=en_GB&offset=0&device=desktop&safesearch=0")
                       .then(response=>response.json())
                       .then(function(data){
@@ -103,7 +105,7 @@
                       links.push(html.split("href=")[1].split('"')[1])
                     }
                     function getDesc(html){
-                      desc.push(html.replace("<p class=w-gl__description>","").replace("</p>","").replace("</","").replace(">","").replace("<b>","").replace("b>","").trim());
+                      desc.push(html.replace("<p class=\"w-gl__description\">","").replace("</p","").replace("</","").replace(">","").replace("<b>","").replace("b>","").trim());
                     }
                     })
                   }
@@ -143,7 +145,7 @@
                     links.push(html.split("href=")[1].split('"')[1])
                   }
                   function getDesc(html){
-                    desc.push(html.replace("<p class=w-gl__description>","").replace("</p>","").replace("</","").replace(">","").replace("<b>","").replace("b>","").trim());
+                    desc.push(html.replace("<p class=\"w-gl__description\">","").replace("</p","").replace("</","").replace(">","").replace("<b>","").replace("b>","").trim());
                   }
                 })
                 
@@ -169,7 +171,7 @@
                   resultlist.forEach(getText);
                   resultlist.forEach(getlinks);
                   descrlist.splice(1).forEach(getDesc);
-                  
+                  console.log(desc);
                   fetch("https://api.qwant.com/v3/search/web?q="+encodeURIComponent("site:substack.com/p/ "+request.q[0])+"&count=10&locale=en_GB&offset=0&device=desktop&safesearch=0")
                   .then(response=>response.json())
                   .then(function(data){
@@ -205,7 +207,7 @@
                   links.push(html.split("href=")[1].split('"')[1])
                 }
                 function getDesc(html){
-                  desc.push(html.replace("<p class=w-gl__description>","").replace("</p>","").replace("</","").replace(">","").replace("<b>","").replace("b>","").trim());
+                  desc.push(html.replace("<p class=\"w-gl__description\">","").replace("</p","").replace("</","").replace(">","").replace("<b>","").replace("b>","").trim());
                 }
                 })
 
@@ -235,7 +237,7 @@
               resultlist.forEach(getText);
               resultlist.forEach(getlinks);
               descrlist.splice(1).forEach(getDesc);
-              
+              console.log(desc);
               fetch("https://api.qwant.com/v3/search/web?q="+encodeURIComponent("site:substack.com/p/ "+request.q[0])+"&count=10&locale=en_GB&offset=0&device=desktop&safesearch=0")
               .then(response=>response.json())
               .then(function(data){
@@ -271,7 +273,7 @@
               links.push(html.split("href=")[1].split('"')[1])
             }
             function getDesc(html){
-              desc.push(html.replace("<p class=w-gl__description>","").replace("</p>","").replace("</","").replace(">","").replace("<b>","").replace("b>","").trim());
+              desc.push(html.replace("<p class=\"w-gl__description\">","").replace("</p","").replace("</","").replace(">","").replace("<b>","").replace("b>","").trim());
             }
             })
             }
