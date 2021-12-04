@@ -148,13 +148,13 @@
               
             
             })
-            }
+          }
           
           
           
           return true;
           
-        }
+      }
       else if(request.contentScriptQuery=="books"){
         
         fetch("https://books.google.com/ngrams/json?content="+encodeURIComponent(request.q)+"&year_start=2019&year_end=2018&corpus=26&smoothing=0")
