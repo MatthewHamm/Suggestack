@@ -168,6 +168,7 @@ window.onload = async function(){
 					title.appendChild(img);
 					title.innerHTML+="<h2>Suggestack</h2>";
 					suggestion.appendChild(title);
+					console.log(response);
 					const qwindex=response.findIndex(function(item){return item.desc.length>256})
 					const qsugg=response.slice(qwindex,response.length);
 					const ssugg=response.slice(0,qwindex-1);
