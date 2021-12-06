@@ -283,7 +283,7 @@ function startpageParse(datal){
     links.push(html.split("href=")[1].split('"')[1])
   }
   function getDesc(html){
-    desc.push(html.replace("<p class=\"w-gl__description\">","").replace("</p","").replace("</","").replace(">","").replace("<b>","").replace("b>","").replace(">\n                </","").trim());
+    desc.push(html.replace("<p class=\"w-gl__description\">","").replace("</p","").replace("</","").replace(">","").replace("<b>","").replace("b>","").replace(">\n                </","").replace("...>","...").trim());
   }
 }
 function qwantParse(datal,resultsl,linksl,descl){
