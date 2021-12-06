@@ -168,10 +168,24 @@ window.onload = async function(){
 					title.appendChild(img);
 					title.innerHTML+="<h2>Suggestack</h2>";
 					suggestion.appendChild(title);
-					console.log(response);
-					const qwindex=response.findIndex(function(item){return item.desc.length>256})
-					const qsugg=response.slice(qwindex,response.length);
-					const ssugg=response.slice(0,qwindex-1);
+					
+					var urls=[];
+					response.forEach(getUrls);
+					
+					function getUrls(item){
+						urls.push(item.link);
+					}
+
+					uniresponse=response.filter(function(item,index){
+						
+						let ans=urls.indexOf(item.link)==index
+						
+						
+						return ans;
+					});
+					const qwindex=uniresponse.findIndex(function(item){return item.desc.length>256})
+					const qsugg=uniresponse.slice(qwindex,response.length);
+					const ssugg=uniresponse.slice(0,qwindex-1);
 					
 
 					var css = ".card:hover {box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);} \n .card {box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2); transition: 0.3s;  display:inline-grid; gridColumn:auto;padding: 2px 16px; text-decoration: none;}\n .links {text-decoration: none;    color:var(--print_on_web_bg_color);";
