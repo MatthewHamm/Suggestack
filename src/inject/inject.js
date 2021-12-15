@@ -94,7 +94,15 @@ window.onload = async function(){
 		if (doc.getElementsByTagName("p")[i].innerText.trim()!=""){
 			pStr=pStr+" "+doc.getElementsByTagName("p")[i].innerText;
 			if(i<doc.getElementsByTagName("p").length-1){
-				pStr=pStr+" "+doc.getElementsByTagName("p")[i+1].innerText;
+				let j=1;
+				while(pStr.length<500&&i+j<doc.getElementsByTagName("p").length-1){
+					pStr=pStr+" "+doc.getElementsByTagName("p")[i+j].innerText;
+					j++;
+				}
+				if(j==1){
+					pStr=pStr+" "+doc.getElementsByTagName("p")[i+j].innerText;
+				}
+					
 			}
 			break;
 		}
@@ -179,6 +187,14 @@ window.onload = async function(){
 					uniresponse=response.filter(function(item,index){
 						
 						let ans=urls.indexOf(item.link)==index
+						if(ans){
+							if(url.includes("?")){
+								ans=!(url.slice(0,url.search("?"))==item.link)
+							}else{
+								ans=!(url==item.link)
+							}
+						}
+						
 						
 						
 						return ans;
