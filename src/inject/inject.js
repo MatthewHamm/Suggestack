@@ -1,5 +1,5 @@
-window.onload = async function(){
-
+loadpage();
+function loadpage(){
 		
 		
 		
@@ -88,29 +88,39 @@ window.onload = async function(){
 	
 	}
 	
-	
-	for(let i=0;i<doc.getElementsByTagName("p").length;i++){
+	const posttext=doc.getElementsByClassName("body markup")[0];
+	for(let i=0;i<posttext.getElementsByTagName("p").length;i++){
 		
-		if (doc.getElementsByTagName("p")[i].innerText.trim()!=""){
-			pStr=pStr+" "+doc.getElementsByTagName("p")[i].innerText;
-			if(i<doc.getElementsByTagName("p").length-1){
+		if (posttext.getElementsByTagName("p")[i].innerText.trim()!=""){
+			pStr=pStr+" "+posttext.getElementsByTagName("p")[i].innerText;
+			pStr=pStr.replace("Subscribe now","");
+			if(i<posttext.getElementsByTagName("p").length-1){
 				let j=1;
-				while(pStr.length<500&&i+j<doc.getElementsByTagName("p").length-1){
-					pStr=pStr+" "+doc.getElementsByTagName("p")[i+j].innerText;
+				while(pStr.length<500&&i+j<posttext.getElementsByTagName("p").length-1){
+					pStr=pStr+" "+posttext.getElementsByTagName("p")[i+j].innerText;
+					pStr=pStr.replace("Subscribe now","");
 					j++;
 				}
 				if(j==1){
-					pStr=pStr+" "+doc.getElementsByTagName("p")[i+j].innerText;
+					pStr=pStr+" "+posttext.getElementsByTagName("p")[i+j].innerText;
+					pStr=pStr.replace("Subscribe now","");
 				}
 					
 			}
 			break;
 		}
 	};
-	for(let i=doc.getElementsByTagName("p").length-1;i>0;i--){
+	for(let i=posttext.getElementsByTagName("p").length-1;i>0;i--){
 		
-		if (doc.getElementsByTagName("p")[i].innerText.trim()!=""){
-			pStr=pStr+" "+doc.getElementsByTagName("p")[i].innerText;
+		if (posttext.getElementsByTagName("p")[i].innerText.trim()!=""){
+			pStr=pStr+" "+posttext.getElementsByTagName("p")[i].innerText;
+			pStr=pStr.replace("Subscribe now","");
+			let j=1;
+			while(pStr.length<750&&i-j>0){
+				pStr=pStr+" "+posttext.getElementsByTagName("p")[i-j].innerText;
+				pStr=pStr.replace("Subscribe now","");
+				j++;
+			}
 			
 			break;
 		}
@@ -434,7 +444,7 @@ window.onload = async function(){
 	}
 
 	
-	
-}	
-	
-		
+}
+const config = { attributes: true, childList: true, subtree: true };	
+var observer= new MutationObserver(loadpage);
+observer.observe(document,config);		

@@ -1,6 +1,6 @@
 {
   "name": "Suggestack",
-  "version": "1.4.2",
+  "version": "1.5",
   "manifest_version": 3,
   "description": "This extension attempts to suggest substacks using the content of the substack you are viewing.",
   "homepage_url": "http://www.suggestack.xyz/",
@@ -33,7 +33,9 @@
         "*://*/*"
       ],
       "js": [
-        "src/inject/inject.js"]
+        "src/inject/inject.js"],
+      "run_at": "document_idle",
+      "all_frames": true
     }
   ]
 }
