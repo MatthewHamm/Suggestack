@@ -1,4 +1,4 @@
-loadpage();
+
 function loadpage(){
 		
 		
@@ -175,7 +175,7 @@ function loadpage(){
 					suggestion.style.display="grid";
 					suggestion.style.gridColumnGap= "50px";
 					suggestion.style.gridRowGap= "50px";
-
+					suggestion.className="suggestion";
 					var title=document.createElement("div");
 					title.style.gridColumnStart="1";
 					title.style.gridColumnStop="3";
@@ -396,8 +396,12 @@ function loadpage(){
 						}
 						
 					}
+					try{
+						document.getElementsByClassName("suggestion")[0].remove()
+					}catch(err){
+						console.log(err);
+					}
 					
-
 					document.getElementById("entry").appendChild(suggestion);
 					
 				});
@@ -443,8 +447,10 @@ function loadpage(){
 		textlist.push(table.Text)
 	}
 
+
 	
 }
-const config = { attributes: true, childList: true, subtree: true };	
+const config = { attributes: true,attributeFilter:["class"], childlist: true, subtree: true };	
 var observer= new MutationObserver(loadpage);
-observer.observe(document,config);		
+observer.observe(document,config);
+
