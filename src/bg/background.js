@@ -25,7 +25,7 @@
                 
               })
               if(relstacks.length>0){
-                fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent(request.q.join(" AND ")+" site:"+relstacks.slice(0,64).join(" OR site:")))
+                fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent(request.q.join(" ")+" site:"+relstacks.slice(0,64).join(" OR site:")))
                 .then(response=>response.text())
                 .then(function(data){
                   var resultTable=startpageParse(data);
@@ -39,96 +39,46 @@
                     links.push(item.link);
                     desc.push(item.desc);
                   }
-                  if(results.length<5){
-                    fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent(request.q.join(" OR ")+" site:"+relstacks.slice(0,64).join(" OR site:")))
-                    .then(response=>response.text())
-                    .then(function(data){
-                      resultTable=startpageParse(data);
-                     
-                      resultTable.forEach(getRe);                  
-                      
-                      function getRe(item){
-                        results.push(item.title);
-                        links.push(item.link);
-                        desc.push(item.desc);
-                      }
-                      if(results.length<5){
-                        fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" AND ")))
-                        .then(response=>response.text())
-                        .then(function(data){
-                          
-                          resultTable=startpageParse(data);
-                          resultTable.forEach(getRe);                  
-                      
-                          function getRe(item){
-                            results.push(item.title);
-                            links.push(item.link);
-                            desc.push(item.desc);
-                          }
-                          if(results.length<5){
-                            fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" OR ")))
-                            .then(response=>response.text())
-                            .then(function(data){
-                              
-                              resultTable=startpageParse(data);
-                              resultTable.forEach(getRe);                  
-                          
-                              function getRe(item){
-                                results.push(item.title);
-                                links.push(item.link);
-                                desc.push(item.desc);
-                              }
-                              fetch("https://api.qwant.com/v3/search/web?q="+encodeURIComponent("site:substack.com/p/ "+request.q[0])+"&count=10&locale=en_GB&offset=0&device=desktop&safesearch=0")
-                              .then(response=>response.json())
-                              .then(function(data){
-        
-                                
-                                sendResponse(qwantParse(data,results,links,desc));
-                                
-                              })
-                            })
-                          }
-                          else{
-                            fetch("https://api.qwant.com/v3/search/web?q="+encodeURIComponent("site:substack.com/p/ "+request.q[0])+"&count=10&locale=en_GB&offset=0&device=desktop&safesearch=0")
-                            .then(response=>response.json())
-                            .then(function(data){
-      
-                              
-                              sendResponse(qwantParse(data,results,links,desc));
-                              
-                            })                        
-                          }                      
-                          
-                          
+                    if(results.length<5){
+                      fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" ")))
+                      .then(response=>response.text())
+                      .then(function(data){
                         
-                        })
-                      }
-                      else{
-                        fetch("https://api.qwant.com/v3/search/web?q="+encodeURIComponent("site:substack.com/p/ "+request.q[0])+"&count=10&locale=en_GB&offset=0&device=desktop&safesearch=0")
+                        resultTable=startpageParse(data);
+                        resultTable.forEach(getRe);                  
+                    
+                        function getRe(item){
+                          results.push(item.title);
+                          links.push(item.link);
+                          desc.push(item.desc);
+                        }
+                        
+                        fetch("https://api.qwant.com/v3/search/web?q="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" "))+"&count=10&locale=en_GB&offset=0&device=desktop&safesearch=0")
                         .then(response=>response.json())
                         .then(function(data){
+  
                           
                           sendResponse(qwantParse(data,results,links,desc));
                           
                         })
-                      }
-                      
-                    })                    
-                  }
-                  else{
-                    fetch("https://api.qwant.com/v3/search/web?q="+encodeURIComponent("site:substack.com/p/ "+request.q[0])+"&count=10&locale=en_GB&offset=0&device=desktop&safesearch=0")
-                    .then(response=>response.json())
-                    .then(function(data){
+                        })
+                    }
+                    else{
+                      fetch("https://api.qwant.com/v3/search/web?q="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" "))+"&count=10&locale=en_GB&offset=0&device=desktop&safesearch=0")
+                      .then(response=>response.json())
+                      .then(function(data){
 
-                      
-                      sendResponse(qwantParse(data,results,links,desc));
-                      
-                    })                    
-                  }
-                })  
-                
+                        
+                        sendResponse(qwantParse(data,results,links,desc));
+                        
+                      })                        
+                    }                      
+                          
+                          
+                        
+                  })                
               }else{
-                fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" AND ")))
+                fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" ")))
                 .then(response=>response.text())
                 .then(function(data){
                   var resultTable=startpageParse(data);
@@ -142,49 +92,26 @@
                     links.push(item.link);
                     desc.push(item.desc);
                   }
-                  if(results.length<5){
-                    fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" OR ")))
-                    .then(response=>response.text())
-                    .then(function(data){
-                      resultTable=startpageParse(data);
-                      
-                      resultTable.forEach(getRe);                  
-                      
-                      function getRe(item){
-                        results.push(item.title);
-                        links.push(item.link);
-                        desc.push(item.desc);
-                      }
-                      fetch("https://api.qwant.com/v3/search/web?q="+encodeURIComponent("site:substack.com/p/ "+request.q[0])+"&count=10&locale=en_GB&offset=0&device=desktop&safesearch=0")
-                      .then(response=>response.json())
-                      .then(function(data){
-                        
-                        
-                        sendResponse(qwantParse(data,results,links,desc));
-                        
-                      })
-                    })
-                  }
-                  else{
-                    fetch("https://api.qwant.com/v3/search/web?q="+encodeURIComponent("site:substack.com/p/ "+request.q[0])+"&count=10&locale=en_GB&offset=0&device=desktop&safesearch=0")
-                    .then(response=>response.json())
-                    .then(function(data){
-                      
-                      
-                      sendResponse(qwantParse(data,results,links,desc));
-                      
-                    })
-                  }
+                  
+                  fetch("https://api.qwant.com/v3/search/web?q="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" "))+"&count=10&locale=en_GB&offset=0&device=desktop&safesearch=0")
+                  .then(response=>response.json())
+                  .then(function(data){
+                    
+                    
+                    sendResponse(qwantParse(data,results,links,desc));
+                    
+                  })
+                  })
                   
                   
-                })
+                
 
               }
             })
 
           }
           else{
-            fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" AND ")))
+            fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" ")))
             .then(response=>response.text())
             .then(function(data){
               var resultTable=startpageParse(data);
@@ -198,31 +125,8 @@
                 links.push(item.link);
                 desc.push(item.desc);
               }
-              if(results.length<5){
-                fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" OR ")))
-                .then(response=>response.text())
-                .then(function(data){
-                  resultTable=startpageParse(data);
-                  
-                  resultTable.forEach(getRe);                  
-                  
-                  function getRe(item){
-                    results.push(item.title);
-                    links.push(item.link);
-                    desc.push(item.desc);
-                  }
-                  fetch("https://api.qwant.com/v3/search/web?q="+encodeURIComponent("site:substack.com/p/ "+request.q[0])+"&count=10&locale=en_GB&offset=0&device=desktop&safesearch=0")
-                  .then(response=>response.json())
-                  .then(function(data){
-                    
-                    
-                    sendResponse(qwantParse(data,results,links,desc));
-                    
-                  })
-                })
-              }
-              else{
-                fetch("https://api.qwant.com/v3/search/web?q="+encodeURIComponent("site:substack.com/p/ "+request.q[0])+"&count=10&locale=en_GB&offset=0&device=desktop&safesearch=0")
+              
+                fetch("https://api.qwant.com/v3/search/web?q="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" "))+"&count=10&locale=en_GB&offset=0&device=desktop&safesearch=0")
                 .then(response=>response.json())
                 .then(function(data){
                   
@@ -230,14 +134,13 @@
                   sendResponse(qwantParse(data,results,links,desc));
                   
                 })
-              }
+              })
               
             
-            })
-          }
+
           
           
-          
+            }
           return true;
           
       }

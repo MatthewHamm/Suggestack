@@ -164,6 +164,47 @@ function loadpage(){
 				let months=["january","febuary","march","april","may","june","july","august","september","october","november","december"]
 				return !(months.includes(item))})
 			textTable.slice(0,5).forEach(textget);
+			function find(needle, haystack) {
+				var results = [];
+				var idx = haystack.indexOf(needle);
+				while (idx != -1) {
+					results.push(idx);
+					idx = haystack.indexOf(needle, idx + 1);
+				}
+				return results;
+			}
+			var textpos=textlist.map(word =>{
+				return{
+					"Text" :word,
+					"Postions" : find(word, strarr)
+				}
+			})
+			var primeInstanceIndex=0;
+			var nextInstanceIndex=0;
+			var wordindex=0;
+			var distanceVal=0;
+			for(let i=0;i<textpos[0].Postions.length;i++){
+				for(let j=1;j<textpos.length;j++){
+					let distance=[];
+					textpos[j].Postions.forEach(value=>{distance.push(Math.abs(value-textpos[0].Postions[i]))})
+					if(distance.some(value=>(value<6))){
+						nextInstanceIndex=distance.findIndex(value=>(value<6));
+						primeInstanceIndex=i;
+						wordindex=j;
+						distanceVal=textpos[j].Postions[nextInstanceIndex]-textpos[0].Postions[i]
+						break;
+					}
+				}
+			}
+			if(distanceVal>0){
+				textlist=strarr.slice(textpos[0].Postions[primeInstanceIndex],textpos[wordindex].Postions[nextInstanceIndex])
+			}
+			else if(distanceVal<0){
+				textlist=strarr.slice(textpos[wordindex].Postions[nextInstanceIndex],textpos[0].Postions[primeInstanceIndex])
+			}
+			else{
+				textlist=strarr.slice(strarr.indexOf(textTable[0].Text)-2,strarr.indexOf(textTable[0].Text)+3);
+			}
 			
 			chrome.runtime.sendMessage(
 				{contentScriptQuery: "query", q: textlist,id:proid, subdomain:domain},function(response){
@@ -186,7 +227,7 @@ function loadpage(){
 					title.appendChild(img);
 					title.innerHTML+="<h2>Suggestack</h2>";
 					suggestion.appendChild(title);
-					
+					console.log(response);
 					var urls=[];
 					response.forEach(getUrls);
 					
