@@ -1,6 +1,6 @@
 {
   "name": "Suggestack",
-  "version": "1.5.4",
+  "version": "1.6",
   "manifest_version": 3,
   "description": "This extension attempts to suggest substacks using the content of the substack you are viewing.",
   "homepage_url": "http://www.suggestack.xyz/",

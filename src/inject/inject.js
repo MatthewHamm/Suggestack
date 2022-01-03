@@ -187,8 +187,8 @@ function loadpage(){
 				for(let j=1;j<textpos.length;j++){
 					let distance=[];
 					textpos[j].Postions.forEach(value=>{distance.push(Math.abs(value-textpos[0].Postions[i]))})
-					if(distance.some(value=>(value<6))){
-						nextInstanceIndex=distance.findIndex(value=>(value<6));
+					if(distance.some(value=>(value<8))){
+						nextInstanceIndex=distance.findIndex(value=>(value<8));
 						primeInstanceIndex=i;
 						wordindex=j;
 						distanceVal=textpos[j].Postions[nextInstanceIndex]-textpos[0].Postions[i]
@@ -200,7 +200,7 @@ function loadpage(){
 				textlist=strarr.slice(textpos[0].Postions[primeInstanceIndex],textpos[wordindex].Postions[nextInstanceIndex])
 			}
 			else if(distanceVal<0){
-				textlist=strarr.slice(textpos[wordindex].Postions[nextInstanceIndex],textpos[0].Postions[primeInstanceIndex])
+				textlist=strarr.slice(textpos[wordindex].Postions[nextInstanceIndex],textpos[0].Postions[primeInstanceIndex]+1)
 			}
 			else{
 				textlist=strarr.slice(strarr.indexOf(textTable[0].Text)-2,strarr.indexOf(textTable[0].Text)+3);
