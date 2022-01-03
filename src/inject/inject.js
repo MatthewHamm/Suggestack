@@ -198,8 +198,12 @@ function loadpage(){
 						
 						let ans=urls.indexOf(item.link)==index
 						if(ans){
-							if(url.includes("?")){
-								ans=!(url.slice(0,url.search("?"))==item.link)
+							if(url.includes("?") && item.link.includes("?")){
+								ans=!(url.slice(0,url.indexOf("?"))==item.link.slice(0,item.link.indexOf("?")))
+							}else if(url.includes("?")){
+								ans=!(url.slice(0,url.indexOf("?"))==item.link)
+							}else if(item.link.includes("?")){
+								ans=!(url==item.link.slice(0,item.link.indexOf("?")))
 							}else{
 								ans=!(url==item.link)
 							}
