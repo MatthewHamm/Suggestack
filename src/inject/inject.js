@@ -80,7 +80,7 @@ function loadpage(){
 		return
 	}
 
-	var pStr = document.getElementsByTagName("h1")[0].innerText
+	var pStr = document.getElementsByTagName("h1")[0].innerText;
 	if (document.getElementsByTagName("h3")[0]!=null){
 		pStr = pStr+" "+document.getElementsByTagName("h3")[0].innerText;
 		
@@ -131,6 +131,11 @@ function loadpage(){
 	var strarr=stringarray(pStr);
 	strarr.forEach(trimarr);
 	var uniarr=[...new Set(strarr)]///leaves just unique words in the array
+	uniarr=uniarr.filter(function(item){
+		let months=["january","febuary","march","april","may","june","july","august","september","october","november","december"]
+
+		return !(months.includes(item) ||item.includes("£")||item.includes("$")||item.includes("%"))
+	})
 	const countOccurrences = (arr, val) => arr.reduce((a, v) => (v === val ? a + 1 : a), 0);
 	var wordcount=[];
 
@@ -146,12 +151,32 @@ function loadpage(){
 			ngrams=[];
 			response.forEach(ngramf);
 			ngrams.forEach(tdf);
+			const title=document.getElementsByTagName("h1")[0].innerText;
+			var titarr=stringarray(title);
+			titarr.forEach(trimarr);
+			var unitit=[...new Set(titarr)];
+			unitit=unitit.filter(function(item){
+				let months=["january","febuary","march","april","may","june","july","august","september","october","november","december"]
+		
+				return !(months.includes(item)||item.includes("£")||item.includes("$")||item.includes("%"))
+			})
+			chrome.storage.sync.get('titlearray', function(result) {
+				if(result.titlearray!=undefined){
+					unitit=unitit.concat(result.titlearray);
+				};
+				
+			});
+			chrome.storage.sync.set({titlearray:unitit},function(){
+				console.log(unitit);
+			});
+			
+			console.log(unitit);
 			var textTable = ngrams.map(word => {
 				let x=Number.MIN_VALUE;
 				if (ngrams.includes(word)){
 					x=response[ngrams.indexOf(word)].timeseries[0];
 				}
-				x= (-Math.log(x))*wordcount[ngrams.indexOf(word)]
+				x= (-Math.log(x))*wordcount[ngrams.indexOf(word)]*((-Math.log(x))*Math.log(countOccurrences(unitit,word)+2))
 				return {
 					"Text": word,
 					"Count": wordcount[ngrams.indexOf(word)],
@@ -160,10 +185,8 @@ function loadpage(){
 			})
 			textTable=textTable.sort((a,b)=>b.Common-a.Common)
 			console.log(textTable);
-			textTable.filter(function(item){
-				let months=["january","febuary","march","april","may","june","july","august","september","october","november","december"]
-				return !(months.includes(item))})
-			textTable.slice(0,5).forEach(textget);
+
+			textTable.forEach(textget);
 			function find(needle, haystack) {
 				var results = [];
 				var idx = haystack.indexOf(needle);
@@ -197,7 +220,7 @@ function loadpage(){
 				}
 			}
 			if(distanceVal>0){
-				textlist=strarr.slice(textpos[0].Postions[primeInstanceIndex],textpos[wordindex].Postions[nextInstanceIndex])
+				textlist=strarr.slice(textpos[0].Postions[primeInstanceIndex],textpos[wordindex].Postions[nextInstanceIndex]+1)
 			}
 			else if(distanceVal<0){
 				textlist=strarr.slice(textpos[wordindex].Postions[nextInstanceIndex],textpos[0].Postions[primeInstanceIndex]+1)
@@ -205,7 +228,7 @@ function loadpage(){
 			else{
 				textlist=strarr.slice(strarr.indexOf(textTable[0].Text)-2,strarr.indexOf(textTable[0].Text)+3);
 			}
-			
+			console.log(textlist);
 			chrome.runtime.sendMessage(
 				{contentScriptQuery: "query", q: textlist,id:proid, subdomain:domain},function(response){
 					
@@ -448,6 +471,22 @@ function loadpage(){
 					}
 					
 					document.getElementById("entry").appendChild(suggestion);
+
+					chrome.storage.sync.get("titlearray",function(result){
+						if(result.titlearray.length>1000){
+							let unqtit=[...new Set(result.titlearray)];
+							chrome.runtime.sendMessage({contentScriptQuery: "books", q:unqtit.toString()},function(response){
+							response=response.sort((a,b)=>a.timeseries[0]-b.timeseries[0]);
+							response=response.slice(0,50);
+							ngrams=[];
+							response.forEach(ngramf);
+							unitit=result.titlearray.filter(item => {return ngrams.includes(item)})
+							})
+						}
+					})
+					chrome.storage.sync.set({titlearray:unitit},function(){
+						console.log(unitit);
+					});
 					
 				});
 			
