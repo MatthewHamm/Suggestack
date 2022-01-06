@@ -229,7 +229,8 @@
 function startpageParse(datal){
   resultsdata=String(datal);
   console.log(resultsdata);
-  resultarr=resultsdata.split("div");
+  resultarr=resultsdata.split( /(<div|div>)/g);
+
   var resultlist=resultarr.filter(function(item){
     return item.includes("w-gl__result-title result-link")
   });
@@ -239,7 +240,7 @@ function startpageParse(datal){
   let results = [];
   let links=[];
   let desc=[];
-
+  console.log(resultlist);
   resultlist.forEach(getText);
   resultlist.forEach(getlinks);
   descrlist.splice(1).forEach(getDesc);
