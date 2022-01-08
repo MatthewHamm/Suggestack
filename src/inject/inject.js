@@ -1,11 +1,9 @@
-
+var hasran=false;
+var url=document.baseURI;
 function loadpage(){
-		
-		
-		
-		
-			
-	
+	if(hasran && url==document.baseURI){
+		return;
+	}
 	var punctuation = '!"#$%&\()*+,-./:;<=>?@[\\]^_`{|}~“”‘–';
 	var regex = new RegExp('[' + punctuation + ']', 'g');
 	const doc=document.getElementsByClassName("post typography")[0];
@@ -77,7 +75,9 @@ function loadpage(){
 		article=doc.innerText;
 	}
 	else{
+
 		return
+
 	}
 
 	var pStr = document.getElementsByTagName("h1")[0].innerText;
@@ -379,7 +379,7 @@ function loadpage(){
 								div.className="card";
 								
 								
-								if(i%2==0){
+								if(i%2==ssugg.length%2){
 									div.style.gridColumn=1
 								}else{
 									div.style.gridColumn=2
@@ -443,7 +443,7 @@ function loadpage(){
 								div.className="card";
 								
 								
-								if(i%2==1){
+								if(i%2==qsugg.length%2){
 									div.style.gridColumn=1
 								}else{
 									div.style.gridColumn=2
@@ -471,7 +471,7 @@ function loadpage(){
 					}
 					
 					document.getElementById("entry").appendChild(suggestion);
-
+					hasran=true;
 					chrome.storage.sync.get("titlearray",function(result){
 						if(result.titlearray.length>1000){
 							let unqtit=[...new Set(result.titlearray)];
@@ -534,7 +534,11 @@ function loadpage(){
 
 	
 }
+
 const config = { attributes: true,attributeFilter:["class"], childlist: true, subtree: true };	
 var observer= new MutationObserver(loadpage);
 observer.observe(document,config);
 
+if(hasran){
+	observer.disconnect();
+}

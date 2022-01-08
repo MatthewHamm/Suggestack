@@ -16,7 +16,7 @@ button {
     border-radius: 2px;
     color: white;
     background-color:rgb(63, 63, 253);
-    transition:cubic-bezier(1, 0, 0, 1);
+    transition:all 500ms cubic-bezier(1, 0, 0, 1);
     margin-bottom:50px;
 }
   
