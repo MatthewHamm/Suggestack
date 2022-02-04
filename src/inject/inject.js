@@ -1,9 +1,6 @@
-var hasran=false;
-var url=document.baseURI;
+
 function loadpage(){
-	if(hasran && url==document.baseURI){
-		return;
-	}
+
 	var punctuation = '!"#$%&\()*+,-./:;<=>?@[\\]^_`{|}~“”‘–';
 	var regex = new RegExp('[' + punctuation + ']', 'g');
 	const doc=document.getElementsByClassName("post typography")[0];
@@ -487,6 +484,7 @@ function loadpage(){
 					chrome.storage.sync.set({titlearray:unitit},function(){
 						console.log(unitit);
 					});
+
 					
 				});
 			
@@ -534,11 +532,4 @@ function loadpage(){
 
 	
 }
-
-const config = { attributes: true,attributeFilter:["class"], childlist: true, subtree: true };	
-var observer= new MutationObserver(loadpage);
-observer.observe(document,config);
-
-if(hasran){
-	observer.disconnect();
-}
+loadpage();
