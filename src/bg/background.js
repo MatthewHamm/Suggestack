@@ -24,11 +24,12 @@
                 
                 
               })
+              //8 isn't two big
               if(relstacks.length>0){
-                fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent(request.q.join(" ")+" site:"+relstacks.slice(0,64).join(" OR site:")))
-                .then(response=>response.text())
+                fetch("https://bridge.easter.fr/?action=display&bridge=GoogleSearch&q="+encodeURIComponent(request.q.join(" ")+" site:"+relstacks.slice(0,64).join(" OR site:"))+"&format=Json")
+                .then(response=>response.json())
                 .then(function(data){
-                  var resultTable=startpageParse(data);
+                  var resultTable=rssParse(data);
                   var results=[];
                   var links=[];
                   var desc=[];
@@ -40,11 +41,11 @@
                     desc.push(item.desc);
                   }
                     if(results.length<5){
-                      fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" ")))
-                      .then(response=>response.text())
+                      fetch("https://bridge.easter.fr/?action=display&bridge=GoogleSearch&q="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" "))+"&format=Json")
+                      .then(response=>response.json())
                       .then(function(data){
                         
-                        resultTable=startpageParse(data);
+                        resultTable=rssParse(data);
                         resultTable.forEach(getRe);                  
                     
                         function getRe(item){
@@ -53,11 +54,11 @@
                           desc.push(item.desc);
                         }
                         if(results.length<5){
-                          fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent("site:substack.com/p/ "+request.q[0]+" OR " + request.q[request.q.length-1]))
-                          .then(response=>response.text())
+                          fetch("https://bridge.easter.fr/?action=display&bridge=GoogleSearch&q="+encodeURIComponent("site:substack.com/p/ "+request.q[0]+" OR " + request.q[request.q.length-1])+"&format=Json")
+                          .then(response=>response.json())
                           .then(function(data){
                             
-                            resultTable=startpageParse(data);
+                            resultTable=rssParse(data);
                             resultTable.forEach(getRe);                  
                         
                             function getRe(item){
@@ -103,10 +104,10 @@
                         
                   })                
               }else{
-                fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" ")))
-                .then(response=>response.text())
+                fetch("https://bridge.easter.fr/?action=display&bridge=GoogleSearch&q="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" "))+"&format=Json")
+                .then(response=>response.json())
                 .then(function(data){
-                  var resultTable=startpageParse(data);
+                  var resultTable=rssParse(data);
                   var results=[];
                   var links=[];
                   var desc=[];
@@ -118,11 +119,11 @@
                     desc.push(item.desc);
                   }
                   if(results.length<5){
-                    fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent("site:substack.com/p/ "+request.q[0]+" OR " + request.q[request.q.length-1]))
-                    .then(response=>response.text())
+                    fetch("https://bridge.easter.fr/?action=display&bridge=GoogleSearch&q="+encodeURIComponent("site:substack.com/p/ "+request.q[0]+" OR " + request.q[request.q.length-1])+"&format=Json")
+                    .then(response=>response.json())
                     .then(function(data){
                       
-                      resultTable=startpageParse(data);
+                      resultTable=rssParse(data);
                       resultTable.forEach(getRe);                  
                   
                       function getRe(item){
@@ -160,10 +161,10 @@
 
           }
           else{
-            fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" ")))
-            .then(response=>response.text())
+            fetch("https://bridge.easter.fr/?action=display&bridge=GoogleSearch&q="+encodeURIComponent("site:substack.com/p/ "+request.q.join(" "))+"&format=Json")
+            .then(response=>response.json())
             .then(function(data){
-              var resultTable=startpageParse(data);
+              var resultTable=rssParse(data);
               var results=[];
               var links=[];
               var desc=[];
@@ -175,11 +176,11 @@
                 desc.push(item.desc);
               }
               if(results.length<5){
-                fetch("https://www.startpage.com/sp/search?query="+encodeURIComponent("site:substack.com/p/ "+request.q[0]+" OR " + request.q[request.q.length-1]))
-                .then(response=>response.text())
+                fetch("https://bridge.easter.fr/?action=display&bridge=GoogleSearch&q="+encodeURIComponent("site:substack.com/p/ "+request.q[0]+" OR " + request.q[request.q.length-1])+"&format=Json")
+                .then(response=>response.json())
                 .then(function(data){
                   
-                  resultTable=startpageParse(data);
+                  resultTable=rssParse(data);
                   resultTable.forEach(getRe);                  
               
                   function getRe(item){
@@ -290,4 +291,27 @@ function qwantParse(datal,resultsl,linksl,descl){
   })
   console.log(resultTable);
   return resultTable;
+}
+function rssParse(data){
+  let results = [];
+  let links=[];
+  let desc=[];
+  let webresult=data.items;
+  
+  webresult.forEach(getRe);
+  
+  
+  function getRe(item){
+    results.push(item.title);
+    links.push(item.url);
+    desc.push(item.content_text);
+  }
+  var resultTable=results.map(title=>{
+    return{
+      "title":title,
+      "desc":desc[results.indexOf(title)],
+      "link":links[results.indexOf(title)]
+    }
+  })
+  return resultTable
 }

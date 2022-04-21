@@ -274,8 +274,13 @@ function loadpage(){
 						
 						return ans;
 					});
-
-					const qwindex=uniresponse.findIndex(function(item){return item.desc.length>256})
+					console.log(uniresponse[0].desc);
+					const qwindex=uniresponse.findIndex(function(item){if(item.hasOwnProperty("desc"))
+																		{
+																			return item.desc.length>256
+																		}
+																		return false;
+																		});
 					if (qwindex==0){
 						var qsugg=uniresponse.slice(Math.floor(uniresponse.length/2),uniresponse.length);
 						var ssugg=uniresponse.slice(0,Math.floor(uniresponse.length/2));
