@@ -302,9 +302,19 @@ function rssParse(data){
   
   
   function getRe(item){
-    results.push(item.title);
-    links.push(item.url);
-    desc.push(item.content_text);
+    
+    fetch(item.url)
+    .then(response=>
+      response.text())
+    .then(data=>{
+      console.log(data);
+      descripArr=data.split(/(<meta data-preact-helmet name=\"description\" content=|><meta data-preact-helmet property=\"og:description\")/g);
+      console.log(descripArr[2]);
+      results.push(item.title);
+      desc.push(descripArr[2]);
+      links.push(item.url);
+    })
+  
   }
   var resultTable=results.map(title=>{
     return{
